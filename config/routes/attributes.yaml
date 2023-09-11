@@ -1,6 +1,0 @@
-# config/routes/attributes.yaml
-controllers:
-    resource:
-        path: ../../app/Controllers/
-        namespace: App\Controllers
-    type: attribute
