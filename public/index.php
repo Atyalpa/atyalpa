@@ -1,14 +1,15 @@
 <?php
 
+use Atyalpa\Route;
+use DI\Container;
+
 require __DIR__ . '/../vendor/autoload.php';
 
-$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    $r->addRoute('GET', '/users', function () {
-        return "Getting users back";
-    });
-});
+/** @var Container */
+$container = require __DIR__ . '/../bootstrap/app.php';
+$dispatcher = require __DIR__ . '/../web/routes.php';
 
-$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($dispatcher) {
+$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($dispatcher, $container) {
     try {
         $router = $dispatcher->dispatch($request->getMethod(), $request->getUri()->getPath());
 
@@ -21,9 +22,9 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
                 return React\Http\Message\Response::plaintext('', React\Http\Message\Response::STATUS_METHOD_NOT_ALLOWED);
                 break;
             case FastRoute\Dispatcher::FOUND:
-                $handler = $router[1];
-                $vars = $router[2];
-                $message = $handler();
+                $controller = $router[1];
+                $parameters = $router[2];
+                $message = $container->call($controller, $parameters);
 
                 return React\Http\Message\Response::plaintext($message);
                 break;
@@ -36,9 +37,10 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
 $socket = new React\Socket\SocketServer('127.0.0.1:8080');
 $http->listen($socket);
 
-$http->on('error', function (Exception $e) {
-    echo $e->getFile() .':'. $e->getLine() . PHP_EOL;
-    echo 'Error' . $e->getMessage() . PHP_EOL;
+$http->on('error', function (Exception $e) use ($container) {
+    $container->get('log')->error($e);
+
+    echo 'Error ' . $e->getMessage() . PHP_EOL;
 });
 
 echo "Server running at http://127.0.0.1:8080" . PHP_EOL;
