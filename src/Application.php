@@ -14,22 +14,28 @@ class Application implements RequestHandlerInterface
 {
     public const VERSION = "0.1";
 
-    public function __construct(protected Dispatcher $dispatcher, protected Container $container)
+    public function __construct(protected Container $container)
     {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $router = $this->dispatcher->dispatch($request->getMethod(), $request->getUri()->getPath());
+        $router = $this->container->make(Router::class);
 
-        switch ($router[0]) {
+        $route = $router->group(fn (Router $router) => require __DIR__ . '/../web/routes.php')
+            ->dispatch(
+                $request->getMethod(),
+                $request->getUri()->getPath()
+            );
+
+        switch ($route[0]) {
             case Dispatcher::NOT_FOUND:
                 return Response::json(['error' => 'Resource not found'])
                     ->withStatus(Response::STATUS_NOT_FOUND);
 
                 break;
             case Dispatcher::METHOD_NOT_ALLOWED:
-                $allowedMethods = $router[1];
+                $allowedMethods = $route[1];
                 return Response::json([
                     'error' => 'Supported methods are ' . implode(', ', $allowedMethods)
                 ])
@@ -37,8 +43,8 @@ class Application implements RequestHandlerInterface
 
                 break;
             case Dispatcher::FOUND:
-                $controller = $router[1];
-                $parameters = $router[2];
+                $controller = $route[1];
+                $parameters = $route[2];
                 $message = $this->container->call($controller, $parameters);
 
                 if (gettype($message) !== 'array') {

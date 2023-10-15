@@ -1,15 +1,12 @@
 <?php
 
-use FastRoute\Dispatcher;
 use DI\Container;
 
 /** @var Container */
 $container = require __DIR__ . '/../bootstrap/app.php';
-/** @var Dispatcher */
-$dispatcher = require __DIR__ . '/../web/routes.php';
 
-$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($dispatcher, $container) {
-    $app = new Atyalpa\Application($dispatcher, $container);
+$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($container) {
+    $app = new Atyalpa\Application($container);
 
     return $app->handle($request);
 });
