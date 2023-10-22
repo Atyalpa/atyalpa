@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+
 class HomeController
 {
     public function index()
     {
-        return 'Coming home';
+        $users = User::all();
+
+        return $users->toArray();
     }
 }

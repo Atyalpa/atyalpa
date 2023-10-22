@@ -16,6 +16,7 @@ class Application implements RequestHandlerInterface
 
     public function __construct(protected Container $container)
     {
+        $this->bootServices();
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -54,6 +55,15 @@ class Application implements RequestHandlerInterface
                 return Response::json($message);
 
                 break;
+        }
+    }
+
+    protected function bootServices()
+    {
+        $services = require __DIR__ . '/../app/Services.php';
+
+        foreach ($services as $service) {
+            $this->container->make($service);
         }
     }
 }
