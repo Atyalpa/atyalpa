@@ -14,7 +14,8 @@
         "php-di/php-di": "^7.0",
         "monolog/monolog": "^3.4",
         "psr/http-server-middleware": "^1.0",
-        "psr/http-server-handler": "^1.0"
+        "psr/http-server-handler": "^1.0",
+        "illuminate/database": "^10.28"
     },
     "autoload": {
         "psr-4": {
