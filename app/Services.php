@@ -1,7 +1,7 @@
 <?php
 
-use Atyalpa\Database;
+use Atyalpa\Services\DatabaseService;
 
 return [
-    Database::class,
+    DatabaseService::class,
 ];

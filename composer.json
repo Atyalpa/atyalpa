@@ -15,7 +15,8 @@
         "monolog/monolog": "^3.4",
         "psr/http-server-middleware": "^1.0",
         "psr/http-server-handler": "^1.0",
-        "illuminate/database": "^10.28"
+        "illuminate/database": "^10.28",
+        "vlucas/phpdotenv": "^5.5"
     },
     "autoload": {
         "psr-4": {
