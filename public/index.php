@@ -1,17 +1,15 @@
 <?php
 
-use DI\Container;
+use Atyalpa\Application;
 
-/** @var Container */
-$container = require __DIR__ . '/../bootstrap/app.php';
+/** @var Application */
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
-$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($container) {
-    $app = new Atyalpa\Application($container);
-
+$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($app) {
     return $app->handle($request);
 });
 
-$socket = new React\Socket\SocketServer('127.0.0.1:8080');
+$socket = new React\Socket\SocketServer($_ENV['APP_URL'] . ':' . $_ENV['APP_PORT']);
 $http->listen($socket);
 
 $http->on('error', function (Exception $e) use ($container) {

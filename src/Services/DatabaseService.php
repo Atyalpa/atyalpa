@@ -1,14 +1,18 @@
 <?php
 
-namespace Atyalpa;
+namespace Atyalpa\Services;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class Database
+class DatabaseService extends Service
 {
-    public function __construct(Capsule $capsule)
+    public function __construct(protected Capsule $capsule)
     {
-        $capsule->addConnection([
+    }
+
+    public function load(): void
+    {
+        $this->capsule->addConnection([
             'driver' => 'mysql',
             'host' => 'localhost',
             'database' => 'atyalpa',
@@ -19,7 +23,7 @@ class Database
             'prefix' => '',
         ]);
 
-        $capsule->setAsGlobal();
-        $capsule->bootEloquent();
+        $this->capsule->setAsGlobal();
+        $this->capsule->bootEloquent();
     }
 }
