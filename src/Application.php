@@ -2,10 +2,13 @@
 
 namespace Atyalpa;
 
+use Atyalpa\Handlers\RequestHandler;
+use Atyalpa\Handlers\ResponseHandler;
 use Atyalpa\Services\Service;
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
+use Fig\Http\Message\StatusCodeInterface;
 use React\Http\Message\Response;
 
 use FastRoute\Dispatcher;
@@ -45,6 +48,7 @@ class Application implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $this->container->set(RequestHandler::class, new RequestHandler($request));
         $router = $this->container->make(Router::class);
 
         $route = $router->group(fn (Router $router) => require_once $this->routePath())
@@ -56,10 +60,11 @@ class Application implements RequestHandlerInterface
         switch ($route[0]) {
             case Dispatcher::METHOD_NOT_ALLOWED:
                 $allowedMethods = $route[1];
-                return Response::json([
-                    'error' => 'Supported methods are ' . implode(', ', $allowedMethods)
-                ])
-                    ->withStatus(Response::STATUS_METHOD_NOT_ALLOWED);
+                return (new ResponseHandler(
+                    StatusCodeInterface::STATUS_METHOD_NOT_ALLOWED,
+                    [],
+                    json_encode(['error' => 'Supported methods are ' . implode(', ', $allowedMethods)])
+                ))();
             case Dispatcher::FOUND:
                 $controller = $route[1];
                 $parameters = $route[2];
@@ -72,8 +77,9 @@ class Application implements RequestHandlerInterface
                 return Response::json($message);
             case Dispatcher::NOT_FOUND:
             default:
-                return Response::json(['error' => 'Resource not found'])
-                    ->withStatus(Response::STATUS_NOT_FOUND);
+                return (new ResponseHandler())->json([
+                    'error' => 'Resource not found.'
+                ])->send();
         }
     }
 
