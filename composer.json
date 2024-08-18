@@ -24,5 +24,8 @@
             "Atyalpa\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "require-dev": {
+        "mockery/mockery": "^1.6"
+    }
 }
