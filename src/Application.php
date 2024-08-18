@@ -2,19 +2,22 @@
 
 namespace Atyalpa;
 
-use Atyalpa\Handlers\RequestHandler;
-use Atyalpa\Handlers\ResponseHandler;
+use Atyalpa\Http\RequestHandler;
+use Atyalpa\Http\ResponseHandler;
+use Atyalpa\Routing\Handlers\MiddlewareHandler;
+use Atyalpa\Routing\Router;
+
 use Atyalpa\Services\Service;
 use DI\Container;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Fig\Http\Message\StatusCodeInterface;
-use React\Http\Message\Response;
 
 use FastRoute\Dispatcher;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Relay\Relay;
 
 class Application implements RequestHandlerInterface
 {
@@ -51,7 +54,7 @@ class Application implements RequestHandlerInterface
         $this->container->set(RequestHandler::class, new RequestHandler($request));
         $router = $this->container->make(Router::class);
 
-        $route = $router->group(fn (Router $router) => require_once $this->routePath())
+        $route = $router->group(fn (Router $router) => require $this->routePath())
             ->dispatch(
                 $request->getMethod(),
                 $request->getUri()->getPath()
@@ -66,15 +69,23 @@ class Application implements RequestHandlerInterface
                     json_encode(['error' => 'Supported methods are ' . implode(', ', $allowedMethods)])
                 ))();
             case Dispatcher::FOUND:
-                $controller = $route[1];
+                $controller = $route[1]['controller'];
                 $parameters = $route[2];
-                $message = $this->container->call($controller, $parameters);
 
-                if (gettype($message) !== 'array') {
-                    return Response::plaintext($message);
-                }
+                $middlewares = $route[1]['middleware'];
+                $middlewares[] = function () use ($controller, $parameters) {
+                    $response = $this->container->call($controller, $parameters);
 
-                return Response::json($message);
+                    if ($response instanceof ResponseHandler) {
+                        return $response->send();
+                    }
+
+                    throw new \Exception('The response must of type ' . ResponseHandler::class);
+                };
+
+                $middlewares = (new MiddlewareHandler($middlewares))->handle();
+                $relay = new Relay($middlewares);
+                return $relay->handle($request);
             case Dispatcher::NOT_FOUND:
             default:
                 return (new ResponseHandler())->json([

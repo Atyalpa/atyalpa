@@ -1,8 +1,10 @@
 <?php
 
 use Atyalpa\Application;
+use DI\Container;
 
-/** @var Application */
+/** @var Container $container */
+/** @var Application $app */
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
 $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($app) {
