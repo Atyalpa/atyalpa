@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "512129448df856a0560f130d756038ed",
+    "content-hash": "b5388453c96d66b94b11fe06db341b65",
     "packages": [
+        {
+            "name": "atyalpa/core",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Atyalpa/core.git",
+                "reference": "3d1411a8433e3c61cc6c387aeae0f626e02c162b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Atyalpa/core/zipball/3d1411a8433e3c61cc6c387aeae0f626e02c162b",
+                "reference": "3d1411a8433e3c61cc6c387aeae0f626e02c162b",
+                "shasum": ""
+            },
+            "require": {
+                "atyalpa/http": "^0.0.1",
+                "atyalpa/routing": "^0.0.2",
+                "nikic/fast-route": "^1.3",
+                "php-di/php-di": "^7.0",
+                "psr/http-server-handler": "^1.0",
+                "psr/http-server-middleware": "^1.0",
+                "relay/relay": "^2.1",
+                "vlucas/phpdotenv": "^5.6"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.6",
+                "phpunit/phpunit": "^11.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Atyalpa\\Core\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Swapnil Bhikule",
+                    "email": "bhikules@outlook.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/Atyalpa/core/issues",
+                "source": "https://github.com/Atyalpa/core/tree/0.0.1"
+            },
+            "time": "2024-08-21T16:56:20+00:00"
+        },
         {
             "name": "atyalpa/http",
             "version": "0.0.1",

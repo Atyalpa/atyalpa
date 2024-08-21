@@ -1,7 +1,8 @@
 <?php
 
-namespace Atyalpa\Services;
+namespace App\Services;
 
+use Atyalpa\Core\Services\Service;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class DatabaseService extends Service

@@ -1,6 +1,6 @@
 <?php
 
-use Atyalpa\Services\DatabaseService;
+use App\Services\DatabaseService;
 
 return [
     DatabaseService::class,
