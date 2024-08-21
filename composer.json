@@ -19,7 +19,8 @@
         "vlucas/phpdotenv": "^5.5",
         "atyalpa/http": "^0.0.1",
         "relay/relay": "^2.1",
-        "atyalpa/routing": "^0.0.2"
+        "atyalpa/routing": "^0.0.2",
+        "atyalpa/core": "^0.0.1"
     },
     "autoload": {
         "psr-4": {

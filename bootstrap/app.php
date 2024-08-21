@@ -3,6 +3,7 @@
 require __DIR__ . '../../vendor/autoload.php';
 
 use DI\ContainerBuilder;
+use Atyalpa\Core\Application;
 
 $containerBuilder = new ContainerBuilder();
 
@@ -11,6 +12,6 @@ $containerBuilder->addDefinitions(__DIR__ . '/../app/Container.php');
 
 $container = $containerBuilder->build();
 
-$app = new Atyalpa\Application($container, dirname(__DIR__));
+$app = new Application($container, dirname(__DIR__));
 
 return $app;
