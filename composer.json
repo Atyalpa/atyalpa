@@ -16,7 +16,10 @@
         "psr/http-server-middleware": "^1.0",
         "psr/http-server-handler": "^1.0",
         "illuminate/database": "^10.28",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "atyalpa/http": "^0.0.1",
+        "relay/relay": "^2.1",
+        "atyalpa/routing": "^0.0.2"
     },
     "autoload": {
         "psr-4": {

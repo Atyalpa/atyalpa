@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Atyalpa\Handlers\RequestHandler;
-use Atyalpa\Handlers\ResponseHandler;
+use Atyalpa\Http\RequestHandler;
+use Atyalpa\Http\ResponseHandler;
 
 class HomeController
 {
     public function index(RequestHandler $requestHandler): ResponseHandler
     {
-        //        $users = User::all();
-
         return (new ResponseHandler())->json([
             'data' => $requestHandler->getQueryParams()
         ]);
