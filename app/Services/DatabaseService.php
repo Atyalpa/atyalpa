@@ -7,9 +7,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 
 class DatabaseService extends Service
 {
-    public function __construct(protected Capsule $capsule)
-    {
-    }
+    public function __construct(protected Capsule $capsule) {}
 
     public function load(): void
     {
