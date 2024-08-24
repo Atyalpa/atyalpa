@@ -1,8 +1,8 @@
 <?php
 
+use Monolog\Handler\StreamHandler;
 use Monolog\Level;
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
 
 return [
     'log' => function () {
