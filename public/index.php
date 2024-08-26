@@ -2,16 +2,19 @@
 
 use Atyalpa\Application;
 use DI\Container;
+use Psr\Http\Message\ServerRequestInterface;
+use React\Http\HttpServer;
+use React\Socket\SocketServer;
 
 /** @var Container $container */
 /** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($app) {
+$http = new HttpServer(function (ServerRequestInterface $request) use ($app) {
     return $app->handle($request);
 });
 
-$socket = new React\Socket\SocketServer($_ENV['APP_URL'].':'.$_ENV['APP_PORT']);
+$socket = new SocketServer($_ENV['APP_URL'].':'.$_ENV['APP_PORT']);
 $http->listen($socket);
 
 $http->on('error', function (Exception $e) use ($container) {
