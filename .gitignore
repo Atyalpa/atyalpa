@@ -2,6 +2,8 @@
 .idea/
 .php-cs-fixer.cache
 .php-cs-fixer.php
+.phpunit.result.cache
+/.phpunit.cache/
 /tools
 /vendor/
 /storage/logs/*
