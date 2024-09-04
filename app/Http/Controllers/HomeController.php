@@ -9,8 +9,8 @@ class HomeController
 {
     public function index(RequestHandler $requestHandler): ResponseHandler
     {
-        return (new ResponseHandler)->json([
-            'data' => $requestHandler->getQueryParams(),
+        return (new ResponseHandler())->json([
+            'data' => 'sample-data',
         ]);
     }
 }

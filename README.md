@@ -1,5 +1,8 @@
 # Atyalpa
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/atyalpa/atyalpa)](https://packagist.org/packages/atyalpa/atyalpa)
+[![Tests](https://github.com/Atyalpa/atyalpa/actions/workflows/php.yml/badge.svg)](https://github.com/Atyalpa/atyalpa/actions/workflows/php.yml)
+
 ## Introduction
 
 Atyalpa is a lightweight PHP framework designed specifically for HTTP REST use. "Atyalpa" is a sanskrit word meaning "very little". Motivation behind `atyalpa` is to bind some of the best packages from PHP community to handle HTTP requests and responses.
