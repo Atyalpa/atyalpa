@@ -1,6 +1,8 @@
 {
     "name": "atyalpa/atyalpa",
+    "description": "Atyalpa is a lightweight REST API first PHP framework.",
     "type": "project",
+    "license": "MIT",
     "authors": [
         {
             "name": "Swapnil Bhikule",
