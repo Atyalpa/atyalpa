@@ -5,7 +5,47 @@
 
 ## Introduction
 
-Atyalpa is a lightweight PHP framework designed specifically for HTTP REST use. "Atyalpa" is a sanskrit word meaning "very little". Motivation behind `atyalpa` is to bind some of the best packages from PHP community to handle HTTP requests and responses.
+Atyalpa is a lightweight PHP framework designed specifically for HTTP REST API use. "Atyalpa" is a sanskrit word meaning "tiny". Motivation behind `atyalpa` is to bind some of the best packages from PHP community to handle HTTP requests and responses.
+
+The framework only offers a way to pass HTTP request to your controllers and send back response from controller to the web. The rest part like caching, authentication is upto you. Don't worry. There are already amazing packages available for you to use without having to reinvent the wheel. What you get from Atyalpa is an opportunity of being picky.
+
+## Table of Contents
+
+- [Atyalpa](#atyalpa)
+  - [Introduction](#introduction)
+  - [Table of Contents](#table-of-contents)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+  - [Getting Started](#getting-started)
+  - [Application Life Cycle](#application-life-cycle)
+    - [1. Instantiation](#1-instantiation)
+    - [2. Routing](#2-routing)
+    - [3. Middlewares](#3-middlewares)
+    - [4. Request Handling](#4-request-handling)
+  - [Dependency Container](#dependency-container)
+    - [Usage](#usage)
+  - [Routing](#routing)
+    - [GET Route](#get-route)
+    - [POST Route](#post-route)
+    - [PUT Route](#put-route)
+    - [PATCH Route](#patch-route)
+    - [DELETE Route](#delete-route)
+    - [Route Grouping](#route-grouping)
+    - [Route Middlewares](#route-middlewares)
+  - [The Request Handler](#the-request-handler)
+    - [Available Methods on RequestHandler](#available-methods-on-requesthandler)
+      - [The HTTP Method](#the-http-method)
+      - [Server Parameters](#server-parameters)
+      - [Query Parameters](#query-parameters)
+      - [Request Body](#request-body)
+      - [Uploaded Files](#uploaded-files)
+  - [The Response Handler](#the-response-handler)
+    - [Available Methods on ResponseHandler](#available-methods-on-responsehandler)
+      - [The `__constructor_` Method](#the-__constructor_-method)
+      - [Add Header to the Response](#add-header-to-the-response)
+      - [Send a JSON Response](#send-a-json-response)
+  - [Middlewares](#middlewares)
+  - [Services](#services)
 
 ## Requirements
 
