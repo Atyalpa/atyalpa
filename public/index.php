@@ -1,6 +1,6 @@
 <?php
 
-use Atyalpa\Application;
+use Atyalpa\Core\Application;
 use DI\Container;
 use Psr\Http\Message\ServerRequestInterface;
 use React\Http\HttpServer;

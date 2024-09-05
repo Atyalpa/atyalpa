@@ -7,7 +7,8 @@ use Monolog\Logger;
 return [
     'log' => function () {
         $log = new Logger('atyalpa');
-        $log->pushHandler(new StreamHandler('storage/logs/atyalpa.log', Level::Warning));
+        $log_postfix = date('Y_m_d');
+        $log->pushHandler(new StreamHandler("storage/logs/atyalpa_$log_postfix.log", Level::Warning));
 
         return $log;
     },
