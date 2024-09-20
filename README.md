@@ -46,6 +46,8 @@ The framework only offers a way to pass HTTP request to your controllers and sen
       - [Send a JSON Response](#send-a-json-response)
   - [Middlewares](#middlewares)
   - [Services](#services)
+  - [Testing](#testing)
+    - [Feature/Integration Testing](#featureintegration-testing)
 
 ## Requirements
 
@@ -538,3 +540,40 @@ Services are classes that gets executed whenever the application boostraps. So, 
 Once you create a service class, you need to register it in `app/Services.php`. Atyalpa will read the array from the file to execute all registered service classes.
 
 As the service classes are loaded and `handle()` method is executed during application bootstraping, to keep the application lightweight, we recommend using service classes for limited purpose.
+
+## Testing
+
+Just like any other framework, you can write both __Unit__ and __Feature__/__Integration__ tests in Atyalpa. Writing unit tests is simple and does not need any dependency.
+Atyalpa already ships with `phpunit/phpunit` so you can simply get started with unit tests. Unit tests can be added to the `tests/Unit` directory. You can take a look at `tests/Unit/ExampleUnitTest.php` file for the reference.
+
+### Feature/Integration Testing
+
+Feature or integration testing however requires some setup as you will be testing behaviour of any API as whole. To make it easy, Atyalpa has added `tests/UsingHttpClient.php` trait that can give you the head start. The trait is used by `tests/TestCase.php` class. You can start writing feature/integration tests in `tests/Feature` directory.
+
+All you need to do is extend `tests/TestCase.php` class in your test class and you can start using all the supported HTTP methods.
+
+```php
+// tests/Feature/MyFeatureControllerTest.php
+
+<?php
+
+namespace Tests\Feature;
+
+use PHPUnit\Framework\Attributes\Test;
+use Tests\TestCase;
+
+class MyFeatureControllerTest extends TestCase
+{
+    #[Test]
+    public function it_returns_valid_response(): void
+    {
+        $response = $this->get('/');
+
+        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(
+            ['data' => 'sample-data'],
+            json_decode($response->getBody()->getContents(), true)
+        );
+    }
+}
+```
